@@ -5,8 +5,70 @@
     <link rel="self" type="application/atom+xml" href="https://blog.martin.ae/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://blog.martin.ae"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2026-08-28T00:00:00+00:00</updated>
+    <updated>2026-10-07T00:00:00+00:00</updated>
     <id>https://blog.martin.ae/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Trying local LLM for agents with Strata</title>
+        <published>2026-10-07T00:00:00+00:00</published>
+        <updated>2026-10-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.martin.ae/local-llm-with-strata/"/>
+        <id>https://blog.martin.ae/local-llm-with-strata/</id>
+        
+        <content type="html" xml:base="https://blog.martin.ae/local-llm-with-strata/">&lt;h1 id=&quot;trying-to-run-a-local-llm-again-but-with-strata&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#trying-to-run-a-local-llm-again-but-with-strata&quot; aria-label=&quot;Anchor link for: trying-to-run-a-local-llm-again-but-with-strata&quot;&gt;Trying to run a local LLM again but with Strata&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;My last attempt to &lt;a href=&quot;https:&#x2F;&#x2F;blog.martin.ae&#x2F;local-llm-with-ollama&#x2F;&quot;&gt;run a local LLM with ollama&lt;&#x2F;a&gt; on my workstation was a failure. Either the model was useless or too slow.&lt;&#x2F;p&gt;
+&lt;p&gt;This week, a new backend for models showed up in hackernews: &lt;a rel=&quot;noopener external&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Niko1221&#x2F;Strata&quot;&gt;Strata&lt;&#x2F;a&gt;.
+It made bold claims. It should be able to run 40-50 token per second on hardware similar to mine. That is a RX6800 with 16GB VRAM and 64GB of system RAM.
+I had to try it!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#installation&quot; aria-label=&quot;Anchor link for: installation&quot;&gt;Installation&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Installation was very easy. I went with the path of least resistance and pasted their prompt in claude:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;Set up Strata on this PC for me: https:&#x2F;&#x2F;github.com&#x2F;Niko1221&#x2F;Strata - follow docs&#x2F;AI_SETUP.md in that repository.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;After a few questions, minor hiccups that claude handled well and a hefty download, it was ready.
+I settled on the model qwen3.8-flash-next-iq2_xs recommended for my setup.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-it-works&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#how-it-works&quot; aria-label=&quot;Anchor link for: how-it-works&quot;&gt;How it works&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Compared to ollama, Strata focuses on a single model which is a Mixture-of-Experts (MoE). Each expert can be offloaded to either the GPU or the CPU.
+Strata loads the important ones and the ones you use more often in the GPU and the rest in the CPU, allowing for very fast processing when it matters.&lt;&#x2F;p&gt;
+&lt;p&gt;More details can be found &lt;a rel=&quot;noopener external&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Niko1221&#x2F;Strata&#x2F;blob&#x2F;main&#x2F;docs&#x2F;HOW_IT_WORKS.md&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;first-attempt-via-the-web-ui&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#first-attempt-via-the-web-ui&quot; aria-label=&quot;Anchor link for: first-attempt-via-the-web-ui&quot;&gt;First attempt via the Web UI&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;I usually test models by asking for a joke. It&#x27;s an easy answer and more often than not you get the one about physicists not trusting atoms.&lt;&#x2F;p&gt;
+&lt;p&gt;For once I was given a joke in no time which made me laugh. Unfortunately I did not capture it.&lt;&#x2F;p&gt;
+&lt;p&gt;The model felt blazing fast! A few more queries were answered very fast as well. You can see the thinking process in the UI which is set to high by default.&lt;&#x2F;p&gt;
+&lt;p&gt;Looking at the monitor page, I was getting about 30-40t&#x2F;s. Not great, not terrible.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;optimizing&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#optimizing&quot; aria-label=&quot;Anchor link for: optimizing&quot;&gt;Optimizing&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Of course the first thing you want to do is get even more speed out of it!&lt;&#x2F;p&gt;
+&lt;p&gt;First I used &lt;code&gt;--vram-reserve-mib 1500&lt;&#x2F;code&gt;. This gave me a bit of breathing room for my apps since this is my main workstation. This would not sound like an optimisation but relieving the pressure on the VRAM definitely helped.
+With this change, my workstation was not hanging anymore and I consistently got around 40-50t&#x2F;s.&lt;&#x2F;p&gt;
+&lt;p&gt;I asked Claude for a bit of help and he pointed out that my graphic card was plugged in the wrong PCIe port. I moved it a while back to a lower 16x PCIe port because the nvme was underneath it and was getting too hot. After a lot of troubleshooting I think the issue is the sensor on the nvme and not the temperature itself. This is because PCIe ports aren&#x27;t all wired the same. The top one on my motherboard is wired directly to the CPU and is a 16x one. The other one, while having a 16x slot, is only a 4x port and wired through the motherboard chipset, sharing the bandwidth with the other ports.
+By moving the graphic card back to the right port, the PCIe bandwidth went from ~3Gbps to a whopping ~12Gbps. This helped a lot. I was now getting 50-60t&#x2F;s!&lt;&#x2F;p&gt;
+&lt;p&gt;Another small win is to enable &lt;code&gt;--draft-vocab en&lt;&#x2F;code&gt;. This prevents loading non-english languages and frees up a bit of VRAM allowing for more experts to load on the GPU. Gains were about 1%, not really measurable tho.&lt;&#x2F;p&gt;
+&lt;p&gt;The model now felt very very fast and more than usable!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;tuning-for-hermes-agent&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#tuning-for-hermes-agent&quot; aria-label=&quot;Anchor link for: tuning-for-hermes-agent&quot;&gt;Tuning for hermes agent&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;First thing I did was increase the context window. I went from 64K to 128K without losing performance. This was amazing. I haven&#x27;t tried 256K yet but performance are supposed to drop by ~20% doing so.&lt;&#x2F;p&gt;
+&lt;p&gt;Hermes also requests the full context size each time so you have to set &lt;code&gt;fix_max_tokens&lt;&#x2F;code&gt; to true.&lt;&#x2F;p&gt;
+&lt;p&gt;Enabling &lt;code&gt;display.show_reasoning: true&lt;&#x2F;code&gt; in hermes allows you to see the model thinking as well.&lt;&#x2F;p&gt;
+&lt;p&gt;One useful thing to do as well is to enable api-monitor. This gives you a great view of the queries being performed as well as their output. Use with care if you share the instance!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;using-it-with-hermes&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#using-it-with-hermes&quot; aria-label=&quot;Anchor link for: using-it-with-hermes&quot;&gt;Using it with hermes&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Hermes now felt very useful. It managed to parse ods files, use the result to perform web searches and then give me a summary.
+It was slower than Claude of course but the performances were amazing.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-cons&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#the-cons&quot; aria-label=&quot;Anchor link for: the-cons&quot;&gt;The cons&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;There are a few gotchas you need to be aware of.&lt;&#x2F;p&gt;
+&lt;p&gt;First of all, it only processes one request at a time. Each request is queued and answered one by one. This is not a big deal but a request from hermes to summarize the conversation might delay your actual work.
+This might be a problem as well with sub agents or if you share access with a team.&lt;&#x2F;p&gt;
+&lt;p&gt;Secondly, if you restart it, the cache is lost. The first query with a huge context will take some time to load. Subsequent ones will be faster.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#conclusion&quot; aria-label=&quot;Anchor link for: conclusion&quot;&gt;Conclusion&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Strata makes local LLM a real possibility with consumer hardware. My workstation is about 5 years old and provides great results.
+With my aging hardware I was able to get 50-60t&#x2F;s on average.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Trying local models for local agent using ollama</title>
         <published>2026-08-28T00:00:00+00:00</published>
@@ -20,10 +82,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://blog.martin.ae/local-agent-notes/"/>
-        <id>https://blog.martin.ae/local-agent-notes/</id>
+        <link rel="alternate" type="text/html" href="https://blog.martin.ae/local-llm-with-ollama/"/>
+        <id>https://blog.martin.ae/local-llm-with-ollama/</id>
         
-        <content type="html" xml:base="https://blog.martin.ae/local-agent-notes/">&lt;h1 id=&quot;running-an-agent-on-my-own-hardware-some-notes&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#running-an-agent-on-my-own-hardware-some-notes&quot; aria-label=&quot;Anchor link for: running-an-agent-on-my-own-hardware-some-notes&quot;&gt;Running an agent on my own hardware: some notes&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+        <content type="html" xml:base="https://blog.martin.ae/local-llm-with-ollama/">&lt;h1 id=&quot;running-an-agent-with-a-local-model-on-my-own-hardware-some-notes&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#running-an-agent-with-a-local-model-on-my-own-hardware-some-notes&quot; aria-label=&quot;Anchor link for: running-an-agent-with-a-local-model-on-my-own-hardware-some-notes&quot;&gt;Running an agent with a local model on my own hardware: some notes&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
 &lt;p&gt;I wanted to try &lt;a rel=&quot;noopener external&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;hermes-agent.ai&quot;&gt;Hermes Agent&lt;&#x2F;a&gt;, but I wanted to find out if I could have a fully local setup running.
 The motivation was 2 fold: privacy, and cost. I&#x27;d like to keep everything local, I have nextcloud, fileserver and even my own mail server.
 As for cost, if I can avoid spending $100 a month by using hardware I already have, that&#x27;d be a small win.&lt;&#x2F;p&gt;

@@ -3,7 +3,7 @@ title = "Trying local models for local agent using ollama"
 date = 2026-08-28
 +++
 
-# Running an agent on my own hardware: some notes
+# Running an agent with a local model on my own hardware: some notes
 
 
 I wanted to try [Hermes Agent](https://hermes-agent.ai), but I wanted to find out if I could have a fully local setup running.

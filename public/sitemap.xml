@@ -7,8 +7,12 @@
         <loc>https://blog.martin.ae/categories/</loc>
     </url>
     <url>
-        <loc>https://blog.martin.ae/local-agent-notes/</loc>
+        <loc>https://blog.martin.ae/local-llm-with-ollama/</loc>
         <lastmod>2026-08-28</lastmod>
+    </url>
+    <url>
+        <loc>https://blog.martin.ae/local-llm-with-strata/</loc>
+        <lastmod>2026-10-07</lastmod>
     </url>
     <url>
         <loc>https://blog.martin.ae/page/1/</loc>
