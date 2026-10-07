@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://martin.ae/sitemap.xml
+Sitemap: https://blog.martin.ae/sitemap.xml

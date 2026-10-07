@@ -1,6 +1,6 @@
-base_url = "https://martin.ae"
+base_url = "https://blog.martin.ae"
 compile_sass = true
-title = "martin.ae"
+title = "blog.martin.ae"
 description = "Guy Martin's blog"
 generate_feeds = true
 build_search_index = true
