@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>martin.ae</title>
+    <subtitle>Guy Martin&#x27;s blog</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://martin.ae/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://martin.ae"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-08-29T00:00:00+00:00</updated>
+    <id>https://martin.ae/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Second blog post</title>
+        <published>2026-08-29T00:00:00+00:00</published>
+        <updated>2026-08-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://martin.ae/second/"/>
+        <id>https://martin.ae/second/</id>
+        
+        <content type="html" xml:base="https://martin.ae/second/">&lt;p&gt;This is the second blog post.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>First blog post</title>
+        <published>2026-08-28T00:00:00+00:00</published>
+        <updated>2026-08-28T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://martin.ae/first/"/>
+        <id>https://martin.ae/first/</id>
+        
+        <content type="html" xml:base="https://martin.ae/first/">&lt;p&gt;This is my first blog post.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Trying local models for local agent using ollama</title>
+        <published>2026-08-28T00:00:00+00:00</published>
+        <updated>2026-08-28T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://martin.ae/local-agent-notes/"/>
+        <id>https://martin.ae/local-agent-notes/</id>
+        
+        <content type="html" xml:base="https://martin.ae/local-agent-notes/">&lt;h1 id=&quot;running-an-agent-on-my-own-hardware-some-notes&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#running-an-agent-on-my-own-hardware-some-notes&quot; aria-label=&quot;Anchor link for: running-an-agent-on-my-own-hardware-some-notes&quot;&gt;Running an agent on my own hardware: some notes&lt;&#x2F;a&gt;&lt;&#x2F;h1&gt;
+&lt;p&gt;I wanted to try &lt;a rel=&quot;noopener external&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;hermes-agent.ai&quot;&gt;Hermes Agent&lt;&#x2F;a&gt;, but I wanted to find out if I could have a fully local setup running.
+The motivation was 2 fold: privacy, and cost. I&#x27;d like to keep everything local, I have nextcloud, fileserver and even my own mail server.
+As for cost, if I can avoid spending $100 a month by using hardware I already have, that&#x27;d be a small win.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-setup&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#the-setup&quot; aria-label=&quot;Anchor link for: the-setup&quot;&gt;The setup&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;As a former Gentoo dev, I&#x27;m still faithful to the distro. I&#x27;m running it on all my machines. My workstation has 64GB of RAM and a RX6800 with 16GB VRAM.&lt;&#x2F;p&gt;
+&lt;p&gt;I decided to install ollama on my workstation and hermes on a test VM to limit the blast in case it would go rogue.&lt;&#x2F;p&gt;
+&lt;p&gt;Ollama was fairly easy to install, &lt;code&gt;emerge ollama&lt;&#x2F;code&gt; did the trick after I added USE=rocm in make.conf.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;finding-the-right-model-to-run-in-ollama&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#finding-the-right-model-to-run-in-ollama&quot; aria-label=&quot;Anchor link for: finding-the-right-model-to-run-in-ollama&quot;&gt;Finding the right model to run in ollama&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;first-attempt-qwen2-5-coder-14b&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#first-attempt-qwen2-5-coder-14b&quot; aria-label=&quot;Anchor link for: first-attempt-qwen2-5-coder-14b&quot;&gt;First attempt: qwen2.5-coder:14b&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;After a quick search, qwen2.5-coder:14b appeared to be a good fit for my 16GB VRAM and intended use.&lt;&#x2F;p&gt;
+&lt;p&gt;Deployment is very easy with &lt;code&gt;ollama pull qwen2.5-coder:14b&lt;&#x2F;code&gt;, it downloads the model and allows you to use it in minutes. However when connecting Hermes to ollama, I ran into the issue that this specific model only supports 32K context length and Hermes requires at least 64K.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;next-attempt-gpt-oss-20b&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#next-attempt-gpt-oss-20b&quot; aria-label=&quot;Anchor link for: next-attempt-gpt-oss-20b&quot;&gt;Next attempt: gpt-oss:20b&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;That model is 13GB, not too bad to fit on my 16GB of VRAM. However, it wasn&#x27;t very useful for the tasks I needed. It did work but it wasn&#x27;t doing very well for tasks that required more thinking.
+Sometimes, I was asking a question to the model and it was returning that question right back at me. Not very useful :)&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;another-attempt-qwen3-5-9b-q8-0&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#another-attempt-qwen3-5-9b-q8-0&quot; aria-label=&quot;Anchor link for: another-attempt-qwen3-5-9b-q8-0&quot;&gt;Another attempt: qwen3.5:9b-q8_0&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;That model is smaller than gpt-oss:20b, it only uses 10GB. While it does fit in the VRAM, it wasn&#x27;t very useful either.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;trying-gemma4-31b&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#trying-gemma4-31b&quot; aria-label=&quot;Anchor link for: trying-gemma4-31b&quot;&gt;Trying gemma4:31b&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;The recommended model for hermes is gemma4:31b. Unfortunately the model you can pull with ollama is too big for my VRAM. Running it would have ollama offload half of it on the CPU.
+It made things very very slow and the system became unstable.&lt;&#x2F;p&gt;
+&lt;p&gt;Trying to find an alternative, Claude suggested that I could use the same model but different quantization. This would keep the same model but reduce its size.&lt;&#x2F;p&gt;
+&lt;p&gt;I attempted gemma4:31b Q3_K_M, while the file on hugging face is only 14GB, it would still not fit in my VRAM:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;NAME                 ID              SIZE     PROCESSOR          CONTEXT    UNTIL&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;gemma4:31b-q3_k_m    86f1b9041d07    16 GB    28%&#x2F;72% CPU&#x2F;GPU    64000      4 minutes from now&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;While the model is definitely more usable, it is still very slow. At least this model was able to use the MCP interface for my CRM Twenty. Previous model did not understand how to use it and were unable to list companies or contacts.&lt;&#x2F;p&gt;
+&lt;p&gt;Next was gemma4:31b Q3_K_S, the file was slightly smaller but still not a win :&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;NAME                 ID              SIZE     PROCESSOR          CONTEXT    UNTIL&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;gemma4:31b-q3_k_s    698f500b39e8    15 GB    25%&#x2F;75% CPU&#x2F;GPU    64000      59 minutes from now&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With more tweaking, using LLAMA_ARG_FIT_TARGET=0, I was able to reduce the offload to 19% but it still wasn&#x27;t enough:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;NAME                 ID              SIZE     PROCESSOR          CONTEXT    UNTIL&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;gemma4:31b-q3_k_s    698f500b39e8    15 GB    19%&#x2F;81% CPU&#x2F;GPU    64000      59 minutes from now&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Time to reduce the quantization some more! Here comes IQ3_XXS !&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;NAME                     ID              SIZE     PROCESSOR          CONTEXT    UNTIL&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;gemma4:31b-ud-iq3_xxs    d99939b77c8e    13 GB    19%&#x2F;81% CPU&#x2F;GPU    64000      59 minutes from now&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Despite reducing the size of the model, it still didn&#x27;t fit the VRAM :-&#x2F;
+Even with a bit of CPU offloading, things were really slow. At least this model was still able to use the tools correctly but it was too slow to be usable for daily use.&lt;&#x2F;p&gt;
+&lt;p&gt;With Claude&#x27;s advice, I tried gemma4:26B, it&#x27;s not a dense model but a MoE (Mixture of Experts) model. It means that the CPU offloading shouldn&#x27;t hurt as much since only some part of the model will be active at once.
+It indeed wasn&#x27;t too slow with the request, it was responding in a matter of seconds rather than minutes.&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;plain&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;NAME          ID              SIZE      PROCESSOR          CONTEXT    UNTIL&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;gemma4:26b    08ae7ec1744b    1.4 GB    26%&#x2F;74% CPU&#x2F;GPU    64000      59 minutes from now&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Unfortunately that model didn&#x27;t prove to be very useful. Even if it was faster, it still felt very slow compared to Claude and it wasn&#x27;t able to use some MCP, constantly failing to issue the proper command.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;takeaways&quot;&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#takeaways&quot; aria-label=&quot;Anchor link for: takeaways&quot;&gt;Takeaways&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Unfortunately, running a local model is a tradeoff between speed and quality.
+Despite many tweaks and attempts, I wasn&#x27;t able to find a usable model.&lt;&#x2F;p&gt;
+&lt;p&gt;A small model isn&#x27;t anywhere near useful. It cannot use tools, provides very simple answers or doesn&#x27;t understand the query.
+Using a bigger model leads to a usable response but only if you are fine with waiting many minutes between answers. At a speed of 3-4t&#x2F;s, you&#x27;ll fall fast asleep.&lt;&#x2F;p&gt;
+&lt;p&gt;I wanted to try this to limit the cost of my AI usage but it will slow me down more than anything else. Currently my AI use doesn&#x27;t justify buying more powerful hardware.
+I&#x27;ll wait until the hardware price goes down or my AI usage cost goes significantly up :)&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://martin.ae/</loc>
+    </url>
+    <url>
+        <loc>https://martin.ae/categories/</loc>
+    </url>
+    <url>
+        <loc>https://martin.ae/first/</loc>
+        <lastmod>2026-08-28</lastmod>
+    </url>
+    <url>
+        <loc>https://martin.ae/local-agent-notes/</loc>
+        <lastmod>2026-08-28</lastmod>
+    </url>
+    <url>
+        <loc>https://martin.ae/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://martin.ae/second/</loc>
+        <lastmod>2026-08-29</lastmod>
+    </url>
+    <url>
+        <loc>https://martin.ae/tags/</loc>
+    </url>
+</urlset>
