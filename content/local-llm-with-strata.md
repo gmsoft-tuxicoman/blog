@@ -48,7 +48,7 @@ First I used `--vram-reserve-mib 1500`. This gave me a bit of breathing room for
 With this change, my workstation was not hanging anymore and I consistently got around 40-50t/s.
 
 I asked Claude for a bit of help and he pointed out that my graphic card was plugged in the wrong PCIe port. I moved it a while back to a lower 16x PCIe port because the nvme was underneath it and was getting too hot. After a lot of troubleshooting I think the issue is the sensor on the nvme and not the temperature itself. This is because PCIe ports aren't all wired the same. The top one on my motherboard is wired directly to the CPU and is a 16x one. The other one, while having a 16x slot, is only a 4x port and wired through the motherboard chipset, sharing the bandwidth with the other ports.
-By moving the graphic card back to the right port, the PCIe bandwidth went from ~3Gbps to a whopping ~12Gbps. This helped a lot. I was now getting 50-60t/s!
+By moving the graphic card back to the right port, the PCIe bandwidth went from ~3GB/s to a whopping ~12GB/s. This helped a lot. I was now getting 50-60t/s!
 
 Another small win is to enable `--draft-vocab en`. This prevents loading non-english languages and frees up a bit of VRAM allowing for more experts to load on the GPU. Gains were about 1%, not really measurable tho.
 
