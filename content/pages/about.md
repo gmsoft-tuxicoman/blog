@@ -17,4 +17,4 @@ Opinions are my own.
 
 - LinkedIn: [linkedin.com/in/guymartin](https://linkedin.com/in/guymartin)
 - GitHub: [github.com/gmsoft-tuxicoman](https://github.com/gmsoft-tuxicoman)
-- Email: blog@martin.ae
+- Email: <blog@martin.ae>
