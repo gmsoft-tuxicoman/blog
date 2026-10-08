@@ -41,6 +41,7 @@ radion_title = "martin.ae"
 radion_menu = [
     {url = "$BASE_URL", name = "Blog"},
     {url = "https://github.com/gmsoft-tuxicoman", name = "Github"},
+    {url = "$BASE_URL/about/", name = "About"},
 ]
 codeblock = true
 enable_search = true
