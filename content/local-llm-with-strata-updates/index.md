@@ -1,6 +1,11 @@
 +++
 title = "Updates on testing local LLM with Strata"
 date = 2026-10-15
+description = "Tuning Strata and Hermes Agent on a 16GB RX 6800: comparing IQ2_XS, IQ3_XXS and IQ3_S, conversation cache, F16 prompt math, and what actually mattered."
+
+
+[extra]
+cover_image = "cover.png"
 +++
 
 
